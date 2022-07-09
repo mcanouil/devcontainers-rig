@@ -4,6 +4,8 @@ set -e
 
 RIG_VERSION=${1:-${RIG_VERSION:-latest}}
 
+ARCH=$(dpkg --print-architecture)
+
 export DEBIAN_FRONTEND=noninteractive
 
 # Function to call apt-get if needed
@@ -25,8 +27,13 @@ apt-get install -y --no-install-recommends \
     bash-completion \
     gzip
 
-curl -Ls "https://github.com/r-lib/rig/releases/download/${RIG_VERSION}/rig-linux-${RIG_VERSION#v}.tar.gz" |
-    sudo tar xz -C /usr/local
+if [ "$ARCH" = "amd64" ]; then
+    curl -Ls "https://github.com/r-lib/rig/releases/download/${RIG_VERSION}/rig-linux-${RIG_VERSION#v}.tar.gz" |
+        sudo tar xz -C /usr/local
+else
+    curl -Ls "https://github.com/r-lib/rig/releases/download/${RIG_VERSION}/rig-linux-${ARCH}-${RIG_VERSION#v}.tar.gz" |
+        sudo tar xz -C /usr/local
+fi
 
 for rver in release 4.2 4.1 4.0; do
     rig add $rver
