@@ -8,7 +8,8 @@
       "USER_LANG": "en_GB.UTF-8",
       "RIG_VERSION": "latest",
       "QUARTO_VERSION": "latest",
-      "USERNAME": "${localEnv:USER}"
+      "USERNAME": "${localEnv:USER}",
+			"R_VERSION": "4.1"
     }
 	},
 

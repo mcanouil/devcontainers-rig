@@ -23,12 +23,15 @@ ENV QUARTO_VERSION=latest
 COPY library-scripts/install_quarto.sh /tmp/library-scripts/
 RUN bash /tmp/library-scripts/install_quarto.sh "${QUARTO_VERSION}"
 
+# [Optional] Uncomment this section to install additional OS packages.
+# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+#     && apt-get -y install --no-install-recommends \
+#         <your-package-list-here> \
+#     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
 ENV RIG_VERSION=latest
 COPY library-scripts/install_rig.sh /tmp/library-scripts/
 RUN bash /tmp/library-scripts/install_rig.sh "${RIG_VERSION}"
 USER "${USERNAME}"
-RUN for rver in release 4.2 4.1 4.0; do rig add $rver; done
-
-# [Optional] Uncomment this section to install additional OS packages.
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
+ARG R_VERSION="release"
+RUN rig add ${R_VERSION} && Rscript -e "pak::pkg_install('renv')"
