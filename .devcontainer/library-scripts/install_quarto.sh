@@ -23,7 +23,7 @@ apt_get_update_if_needed()
 if [ "$ARCH" = "amd64" ]; then
     if [ ! -x "$(command -v wget)" ]; then
         apt_get_update_if_needed
-        apt-get -y install wget ca-certificates
+        apt-get install -y --no-install-recommends wget ca-certificates
     fi
 
     if [ "$QUARTO_VERSION" = "latest" ]; then
