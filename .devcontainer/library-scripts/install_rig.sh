@@ -18,7 +18,7 @@ apt_get_update_if_needed()
 }
 
 apt_get_update_if_needed
-apt-get install -y --no-install-recommends
+apt-get install -y --no-install-recommends \
     curl \
     libcurl4-openssl-dev \
     ca-certificates \
