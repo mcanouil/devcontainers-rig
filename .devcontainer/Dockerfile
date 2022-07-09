@@ -19,13 +19,15 @@ ARG USER_LANG=en_GB.UTF-8
 COPY library-scripts/set_locale.sh /tmp/library-scripts/
 RUN bash /tmp/library-scripts/set_locale.sh "${USER_LANG}"
 
-ENV RIG_VERSION=latest
-COPY library-scripts/install_rig.sh /tmp/library-scripts/
-RUN bash /tmp/library-scripts/install_rig.sh "${RIG_VERSION}"
-
 ENV QUARTO_VERSION=latest
 COPY library-scripts/install_quarto.sh /tmp/library-scripts/
 RUN bash /tmp/library-scripts/install_quarto.sh "${QUARTO_VERSION}"
+
+ENV RIG_VERSION=latest
+COPY library-scripts/install_rig.sh /tmp/library-scripts/
+RUN bash /tmp/library-scripts/install_rig.sh "${RIG_VERSION}"
+USER "${USERNAME}"
+RUN for rver in release 4.2 4.1 4.0; do rig add $rver; done
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
