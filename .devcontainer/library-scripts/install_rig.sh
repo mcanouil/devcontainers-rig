@@ -35,10 +35,6 @@ else
         sudo tar xz -C /usr/local
 fi
 
-for rver in release 4.2 4.1 4.0; do
-    rig add $rver
-done
-
 # rig system add-pak --all
 
 # Clean up
